@@ -1,3 +1,4 @@
 .vs/
 **Debug/
 **Release/
+*.blend[0-9]*
