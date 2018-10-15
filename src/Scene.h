@@ -21,9 +21,10 @@ namespace Engine {
 		static bool initialized;
 		Camera cam;
 		Model* testmodel;
+		glm::vec3 backColor = glm::vec3(0.0f);
 	public:
 		Scene();
-		void setBackgroundColor(glm::vec3 backColor);
+		void setBackgroundColor(unsigned int r, unsigned int g, unsigned int b);
 		void addModel(Model* model);
 		void addLight(Light* light);
 		void render(glm::mat4 view, glm::mat4 projection);

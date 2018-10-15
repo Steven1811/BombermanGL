@@ -123,6 +123,10 @@ void Shader::setMat4(const std::string &name, glm::mat4* mat4) {
 	glUniformMatrix4fv(glGetUniformLocation(progId, name.c_str()), 1, GL_FALSE, glm::value_ptr(*mat4));
 }
 
+void Shader::setVec3(const std::string &name, glm::vec3* vec3) {
+	glUniform3fv(glGetUniformLocation(progId, name.c_str()), 1, glm::value_ptr(*vec3));
+}
+
 unsigned int Shader::getProgId() {
 	return progId;
 }

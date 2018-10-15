@@ -18,6 +18,7 @@ Game::Game()
 	});
 	win->setBackgroundColor(255, 0, 255);
 	glfwPollEvents();
+	scene->setBackgroundColor(54, 57, 62);
 	while (win->isOpen()) {
 		glfwPollEvents();
 		//logInfo("Window FPS %f", win->getFps());
