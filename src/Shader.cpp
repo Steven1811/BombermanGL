@@ -1,5 +1,7 @@
 #include "pch.h"
-#include "Shader.hpp"
+#include "Shader.h"
+
+using namespace Engine;
 
 Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 {
@@ -31,7 +33,7 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 	}
 	catch (std::ifstream::failure e)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		logError("Shaderfile not succesfully read!");
 	}
 
 	const char* vShaderCode = vertexCode.c_str();
@@ -49,11 +51,14 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 
 	// print compile errors if any
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+	glGetShaderInfoLog(vertex, 512, NULL, infoLog);
 	if (!success)
 	{
-		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	};
+		logError("Compilation of VertexShader has failed: %s", infoLog);
+	}
+	else {
+		logInfo("Compilation of VertexShader was successful: %s", infoLog);
+	}
 
 	//  fragment Shader
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
@@ -62,11 +67,14 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 
 	// print compile errors if any
 	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+	glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 	if (!success)
 	{
-		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	};
+		logError("Compilation of FragmentShader has failed: %s", infoLog);
+	}
+	else {
+		logInfo("Compilation of FragmentShader was successful: %s", infoLog);
+	}
 
 	// shader Program
 	progId = glCreateProgram();
@@ -76,10 +84,14 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 
 	// print linking errors if any
 	glGetProgramiv(progId, GL_LINK_STATUS, &success);
+	glGetProgramInfoLog(progId, 512, NULL, infoLog);
 	if (!success)
 	{
-		glGetProgramInfoLog(progId, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+		logError("Linking Fragment- and VertexShaders together has failed: %s", infoLog);
+	}
+	else {
+		logInfo("Linking Fragment- and VertexShaders together was successful: %s", infoLog);
 	}
 
 	// delete the shaders as they're linked into our program now and no longer necessery
@@ -105,6 +117,10 @@ void Shader::setInt(const std::string &name, int value)
 void Shader::setFloat(const std::string &name, float value)
 {
 	glUniform1f(glGetUniformLocation(progId, name.c_str()), value);
+}
+
+void Shader::setMat4(const std::string &name, glm::mat4* mat4) {
+	glUniformMatrix4fv(glGetUniformLocation(progId, name.c_str()), 1, GL_FALSE, glm::value_ptr(*mat4));
 }
 
 unsigned int Shader::getProgId() {
