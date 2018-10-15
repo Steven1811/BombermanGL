@@ -37,12 +37,6 @@ void Window::setKeyCallback(GLFWkeyfun key_callback) {
 	}
 }
 
-/*
-void Window::setRenderCallback(RenderCb renderCb) {
-	this->renderCb = renderCb;
-}
-*/
-
 Window::Window(unsigned int width, unsigned int height, const char* windowTitle)
 {
 	initialize();

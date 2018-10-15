@@ -104,14 +104,15 @@ Model::Model()
 
 void Model::draw(glm::mat4 view, glm::mat4 projection) {
 	shader->use();
-	glm::vec3 objColor = glm::vec3(0.5f, 0.0f, 0.0f);
-	glm::vec3 lightPos = glm::vec3(sin((float) glfwGetTime()), sin((float)glfwGetTime()), -1.5f);
-	glm::vec3 lightColor = glm::vec3(0.8f, 0.0f, 0.0f);
+	glm::vec3 objColor = glm::vec3(0.7f, 0.7f, 0.7f);
+	//glm::vec3 lightPos = glm::vec3(1.0f, 2.0f, -2.0f);
+	glm::vec3 lightPos = glm::vec3(sin((float) glfwGetTime()) *2.5f, cos((float)glfwGetTime()) *2.5f, sin((float)glfwGetTime()) - 2.0f);
+	glm::vec3 lightColor = glm::vec3(0.0f, 0.5f, 0.0f);
 	glm::vec3 viewPos = glm::vec3(0.0f, 0.0f, -5.0f);
 	shader->setMat4("model", &model);
 	shader->setMat4("view", &view);
-	shader->setInt("shininess", 256);
-	shader->setFloat("specularStrength", 1.0f);
+	shader->setInt("shininess", 32);
+	shader->setFloat("specularStrength", 0.5f);
 	shader->setVec3("viewPos", &viewPos);
 	shader->setMat4("projection", &projection);
 	shader->setFloat("ambientStrength", 1.0f);

@@ -21,7 +21,7 @@ Game::Game()
 	scene->setBackgroundColor(54, 57, 62);
 	while (win->isOpen()) {
 		glfwPollEvents();
-		//logInfo("Window FPS %f", win->getFps());
+		logInfo("Window FPS %f", win->getFps());
 
 		win->update();
 	}
