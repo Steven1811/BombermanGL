@@ -28,6 +28,7 @@ namespace Engine {
 		void addModel(Model* model);
 		void addLight(Light* light);
 		void render(glm::mat4 view, glm::mat4 projection);
+		void recompileShaders();
 		~Scene();
 	};
 }

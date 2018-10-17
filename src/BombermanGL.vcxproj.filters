@@ -78,6 +78,9 @@
     <ClInclude Include="Material.h">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Headerdateien\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -129,6 +132,9 @@
       <Filter>Quelldateien\Game</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
   </ItemGroup>

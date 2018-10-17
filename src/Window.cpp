@@ -27,6 +27,10 @@ void Window::initialize() {
 	}
 }
 
+void Window::keyCbImpl() {
+
+}
+
 void Window::setKeyCallback(GLFWkeyfun key_callback) {
 	GLFWkeyfun keycb = glfwSetKeyCallback(window, key_callback);
 	if (!keycb) {
@@ -48,32 +52,44 @@ Window::Window(unsigned int width, unsigned int height, const char* windowTitle)
 		windowCount++;
 		logInfo("Window created!");
 	}
+
+	//Set Default Callback for Wrapper
+	int test;
+
 	setContextActive();
+	glfwSetWindowUserPointer(window, this);
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
 }
 
-void Window::update() {
-	//Count FPS
-	double currentTime = glfwGetTime();
-	frameCount++;
-
-	if (currentTime - previousTime >= 1.0) {
-		fps = frameCount;
-		frameCount = 0;
-		previousTime = currentTime;
-	}
-
+void Window::doRender() {
 	//If no scene was added to the window, draw the default background color
 	if (!scene) {
 		glClearColor(backColor.r, backColor.g, backColor.b, 1.);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-	
-	//Draw Scene
-	scene->render(view, projection);
+	else {
+		//Draw Scene
+		scene->render(view, projection);
+	}
 
 	//Clear Screen and swap Backbuffer with Frontbuffer
 	glfwSwapBuffers(window);
+}
+
+void Window::update() {
+	double currentTime = glfwGetTime();
+	frameCount++;
+
+	//Check if framerateLimiting is enabled
+	if (framerateLimit != 0) {
+		if (currentTime - previousTime >= 1.0 / (float)framerateLimit) {
+			doRender();
+			previousTime = currentTime;
+		}
+	}
+	else {
+		doRender();
+	}
 }
 
 void Window::setContextActive() {
@@ -112,4 +128,13 @@ double Window::getFps() {
 
 void Window::setScene(Scene* scene) {
 	this->scene = scene;
+}
+
+void Window::setFramerateLimit(unsigned int framerate) {
+	logInfo("FramerateLimit set to %i", framerate);
+	this->framerateLimit = framerate;
+}
+
+Scene* Window::getScene() {
+	return this->scene;
 }

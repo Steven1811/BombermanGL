@@ -16,7 +16,11 @@ namespace Engine {
 	class Shader
 	{
 	private:
-		unsigned int progId;
+		GLuint progId;
+		const char* vPath;
+		const char* fPath;
+		std::string vCode;
+		std::string fCode;
 	public:
 		Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
 		void use();
@@ -25,6 +29,7 @@ namespace Engine {
 		void setFloat(const std::string &name, float value);
 		void setMat4(const std::string &name, glm::mat4* mat4);
 		void setVec3(const std::string &name, glm::vec3* vec3);
+		void compile();
 		unsigned int getProgId();
 	};
 }

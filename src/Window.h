@@ -14,14 +14,14 @@
 #include "Model.h"
 
 namespace Engine {
-	typedef void (*RenderCb)(GLFWwindow* window, unsigned int fBufWidth, unsigned int fBufHeight);
-	
+
+	typedef void(*RenderCb)(GLFWwindow* window, unsigned int fBufWidth, unsigned int fBufHeight);
 	class Window
 	{
 	private:
+		unsigned int framerateLimit = 0;
 		static bool initialized;
 		static unsigned int windowCount;
-
 		glm::vec3 backColor = glm::vec3(1.0f, 0.0f, 0.0f);
 		int fBufWidth, fBufHeight = 0;
 		Scene* scene;
@@ -33,9 +33,10 @@ namespace Engine {
 		double fps;
 		static void error_callback(int error, const char* description);
 		void initialize();
-
+		void doRender();
 		glm::mat4 view = glm::identity<glm::mat4>();
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+		void keyCbImpl();
 	public:
 		Window(unsigned int width, unsigned int height, const char* windowTitle);
 		~Window();
@@ -48,5 +49,7 @@ namespace Engine {
 		void setBackgroundColor(unsigned int r, unsigned int g, unsigned int b); //Only displayed, if no Scene is available.
 		bool isOpen();
 		double getFps();
+		void setFramerateLimit(unsigned int framerate);
+		Scene* getScene();
 	};
 }

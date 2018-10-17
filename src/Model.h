@@ -26,6 +26,7 @@ namespace Engine {
 		Model();
 		void rotate(float angle, glm::vec3 rotation);
 		void draw(glm::mat4 view, glm::mat4 projection);
+		Shader* getShader();
 		~Model();
 	};
 }

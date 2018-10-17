@@ -2,7 +2,7 @@
 class Light
 {
 private:
-	float ambientStrength = 0.1;
+	float ambientStrength = 0.1f;
 
 public:
 	Light();

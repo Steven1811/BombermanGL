@@ -5,21 +5,34 @@ using namespace Engine;
 
 Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 {
-	// 1. retrieve the vertex/fragment source code from filePath
-	std::string vertexCode;
-	std::string fragmentCode;
+	vPath = vertexShaderPath;
+	fPath = fragmentShaderPath;
+	compile();
+}
+
+//Deletes old Shader, Reloads Shaderfiles, Compiles new Shader
+void Shader::compile() {
+	//Check if a Shaderprogram is already present
+	if (progId != 0) {
+		logInfo("Shaderprogram already present. Discarding old Shaderprogram.");
+		glDeleteShader(progId);
+	}
+
+	//Load File
+	// ensure ifstream objects can throw exceptions:
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
 
-	// ensure ifstream objects can throw exceptions:
 	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
 	try
 	{
 		// open files
-		vShaderFile.open(vertexShaderPath);
-		fShaderFile.open(fragmentShaderPath);
+		vShaderFile.open(vPath);
+		logInfo("VertexShader File openend!");
+		fShaderFile.open(fPath);
+		logInfo("FragmentShader File openend!");
 		std::stringstream vShaderStream, fShaderStream;
 		// read file's buffer contents into streams
 		vShaderStream << vShaderFile.rdbuf();
@@ -28,39 +41,41 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 		vShaderFile.close();
 		fShaderFile.close();
 		// convert stream into string
-		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
+		vCode = vShaderStream.str();
+		fCode = fShaderStream.str();
 	}
 	catch (std::ifstream::failure e)
 	{
 		logError("Shaderfile not succesfully read!");
 	}
 
-	const char* vShaderCode = vertexCode.c_str();
-	const char* fShaderCode = fragmentCode.c_str();
+	// Convert to traditional C strings
+	const GLchar* vShaderCode = vCode.c_str();
+	const GLchar* fShaderCode = fCode.c_str();
 
-	// 2. compile shaders
-	unsigned int vertex, fragment;
+	// Compile shaders
+	GLuint vertex, fragment;
 	int success;
 	char infoLog[512];
 
-	// vertex Shader
+	// Vertex Shader
 	vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex, 1, &vShaderCode, NULL);
 	glCompileShader(vertex);
 
-	// print compile errors if any
+	// Print compile errors if any
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
 	glGetShaderInfoLog(vertex, 512, NULL, infoLog);
 	if (!success)
 	{
-		logError("Compilation of VertexShader has failed: %s", infoLog);
+		logError("%s", infoLog);
 	}
 	else {
 		logInfo("Compilation of VertexShader was successful: %s", infoLog);
 	}
 
-	//  fragment Shader
+
+	// Fragment Shader
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &fShaderCode, NULL);
 	glCompileShader(fragment);
@@ -70,13 +85,13 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 	glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 	if (!success)
 	{
-		logError("Compilation of FragmentShader has failed: %s", infoLog);
+		logError("%s", infoLog);
 	}
 	else {
 		logInfo("Compilation of FragmentShader was successful: %s", infoLog);
 	}
 
-	// shader Program
+	// Shader Program
 	progId = glCreateProgram();
 	glAttachShader(progId, vertex);
 	glAttachShader(progId, fragment);
@@ -87,7 +102,6 @@ Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 	glGetProgramInfoLog(progId, 512, NULL, infoLog);
 	if (!success)
 	{
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 		logError("Linking Fragment- and VertexShaders together has failed: %s", infoLog);
 	}
 	else {

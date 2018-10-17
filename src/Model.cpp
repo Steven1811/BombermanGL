@@ -127,6 +127,10 @@ Model::~Model()
 {
 }
 
+Shader* Model::getShader() {
+	return this->shader;
+}
+
 void Model::rotate(float angle, glm::vec3 rotation) {
 	model = glm::rotate(model, glm::radians(angle), rotation);
 }

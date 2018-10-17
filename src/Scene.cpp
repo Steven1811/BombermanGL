@@ -28,6 +28,7 @@ Scene::Scene()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	testmodel = new Model();
 	glEnable(GL_DEPTH_TEST);
+
 }
 
 void Scene::setBackgroundColor(unsigned int r, unsigned int g, unsigned int b) {
@@ -40,9 +41,13 @@ Scene::~Scene()
 {
 }
 
+void Scene::recompileShaders() {
+	testmodel->getShader()->compile();
+}
+
 void Scene::render(glm::mat4 view, glm::mat4 projection) {
 	glClearColor(backColor.r, backColor.g, backColor.b, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	testmodel->rotate(sin((float)glfwGetTime() * 0.002f), glm::vec3(1.0f, 1.0f, 1.0f));
+	testmodel->rotate(sin((float)glfwGetTime() * 0.2f), glm::vec3(1.0f, 1.0f, 1.0f));
 	testmodel->draw(view, projection);
 }
