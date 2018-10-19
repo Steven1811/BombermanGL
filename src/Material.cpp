@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Material.h"
+#include "Material.hpp"
 
+using namespace Engine;
 
 Material::Material()
 {

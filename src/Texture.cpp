@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Texture.h"
+#include "Texture.hpp"
 
+using namespace Engine;
 
 Texture::Texture()
 {

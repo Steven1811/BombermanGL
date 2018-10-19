@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Bomb.h"
+#include "Bomb.hpp"
 
 
 Bomb::Bomb()

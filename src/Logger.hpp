@@ -1,4 +1,6 @@
-#pragma once
+#ifndef LOGGER_H
+#define LOGGER_H
+
 #include <sstream>
 #include <cstdio>
 #include <cstdarg>
@@ -30,3 +32,4 @@ void _log(FILE* stream, T source, const char* callerFunction, const char* messag
 	vfprintf(stream, ss.str().c_str(), args);
 	va_end(args);
 }
+#endif

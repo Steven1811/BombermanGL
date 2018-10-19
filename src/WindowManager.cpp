@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "WindowManager.h"
+#include "WindowManager.hpp"
 
+using namespace Engine;
 
 WindowManager::WindowManager()
 {

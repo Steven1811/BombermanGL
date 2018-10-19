@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
+
 #include <iostream>
 #include <thread>
 
@@ -8,10 +10,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.h"
-#include "Window.h"
-#include "Scene.h"
-#include "Game.h"
+#include "Shader.hpp"
+#include "Window.hpp"
+#include "Scene.hpp"
 
 #define APPNAME "BombermanGL"
 #define WINDOW_WIDTH 800
@@ -24,4 +25,4 @@ public:
 	Game();
 	~Game();
 };
-
+#endif

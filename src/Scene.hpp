@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENE_H
+#define SCENE_H
+
 #include <stdio.h>
 #include <vector>
 
@@ -7,28 +9,27 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Model.hpp"
+#include "Light.hpp"
+#include "Camera.hpp"
 
-#include "Logger.h"
-#include "Camera.h"
-#include "Model.h"
-#include "Light.h"
-
-namespace Engine {
+namespace Engine{
 	class Scene
 	{
 	private:
 		std::vector<Model*> models;
 		static bool initialized;
-		Camera cam;
+		Camera* cam;
 		Model* testmodel;
 		glm::vec3 backColor = glm::vec3(0.0f);
 	public:
-		Scene();
+		Scene(Window* window);
 		void setBackgroundColor(unsigned int r, unsigned int g, unsigned int b);
 		void addModel(Model* model);
 		void addLight(Light* light);
-		void render(glm::mat4 view, glm::mat4 projection);
+		void render();
 		void recompileShaders();
 		~Scene();
 	};
 }
+#endif

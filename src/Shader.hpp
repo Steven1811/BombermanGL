@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHADER_H
+#define SHADER_H
+
 #include <GL/glew.h>
 
 #include <string>
@@ -10,7 +12,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Logger.h"
+#include "Logger.hpp"
 
 namespace Engine {
 	class Shader
@@ -33,3 +35,4 @@ namespace Engine {
 		unsigned int getProgId();
 	};
 }
+#endif

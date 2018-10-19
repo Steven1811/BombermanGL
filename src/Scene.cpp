@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "Scene.h"
+#include "Scene.hpp"
 
 using namespace Engine;
 
 bool Scene::initialized;
 
-Scene::Scene()
+Scene::Scene(Window* window)
 {
 	if (!initialized) {
 		logInfo("GLEW not initialized. Initializing for the first time.");
@@ -23,6 +23,8 @@ Scene::Scene()
 	else {
 		logInfo("GLEW already initialized. Skipping initialization.");
 	}
+
+	cam = new Camera(window);
 
 	logInfo("Loading up TestModel.");
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -45,9 +47,9 @@ void Scene::recompileShaders() {
 	testmodel->getShader()->compile();
 }
 
-void Scene::render(glm::mat4 view, glm::mat4 projection) {
+void Scene::render() {
 	glClearColor(backColor.r, backColor.g, backColor.b, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	testmodel->rotate(sin((float)glfwGetTime() * 0.2f), glm::vec3(1.0f, 1.0f, 1.0f));
-	testmodel->draw(view, projection);
+	testmodel->draw(cam->getViewMatrix(), cam->getProjectionMatrix());
 }

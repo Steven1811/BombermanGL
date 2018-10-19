@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Light.h"
+#include "Light.hpp"
 
+using namespace Engine;
 
 Light::Light()
 {

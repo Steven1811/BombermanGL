@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Window.h"
+#include "Window.hpp"
 
 using namespace Engine;
 
@@ -27,10 +27,6 @@ void Window::initialize() {
 	}
 }
 
-void Window::keyCbImpl() {
-
-}
-
 void Window::setKeyCallback(GLFWkeyfun key_callback) {
 	GLFWkeyfun keycb = glfwSetKeyCallback(window, key_callback);
 	if (!keycb) {
@@ -53,15 +49,24 @@ Window::Window(unsigned int width, unsigned int height, const char* windowTitle)
 		logInfo("Window created!");
 	}
 
-	//Set Default Callback for Wrapper
-	int test;
+	glfwSetWindowUserPointer(window, this);
+	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) -> void {
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->triggerKeyCb(key, scancode, action, mods);
+	});
 
 	setContextActive();
-	glfwSetWindowUserPointer(window, this);
+	
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
 }
 
 void Window::doRender() {
+	//Process Input every frame
+	for (struct sceneCallback sSceneKeyCallback : sceneKeyCallbacks) {
+		if(glfwGetKey(window, sSceneKeyCallback.key) == sSceneKeyCallback.action)
+			sSceneKeyCallback.scb(this->scene, sSceneKeyCallback.key, sSceneKeyCallback.action);
+	}
+	
 	//If no scene was added to the window, draw the default background color
 	if (!scene) {
 		glClearColor(backColor.r, backColor.g, backColor.b, 1.);
@@ -69,7 +74,7 @@ void Window::doRender() {
 	}
 	else {
 		//Draw Scene
-		scene->render(view, projection);
+		scene->render();
 	}
 
 	//Clear Screen and swap Backbuffer with Frontbuffer
@@ -79,6 +84,9 @@ void Window::doRender() {
 void Window::update() {
 	double currentTime = glfwGetTime();
 	frameCount++;
+
+	
+
 
 	//Check if framerateLimiting is enabled
 	if (framerateLimit != 0) {
@@ -90,6 +98,7 @@ void Window::update() {
 	else {
 		doRender();
 	}
+	glfwPollEvents();
 }
 
 void Window::setContextActive() {
@@ -137,4 +146,26 @@ void Window::setFramerateLimit(unsigned int framerate) {
 
 Scene* Window::getScene() {
 	return this->scene;
+}
+
+glm::vec2 Window::getSize() {
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	return glm::vec2(width, height);
+}
+
+int Window::getWidth() {
+	return getSize().x;
+}
+
+int Window::getHeight() {
+	return getSize().y;
+}
+
+void Window::addKeyCallback(keyCb keyCallback) {
+	keyCallbacks.push_back(keyCallback);
+}
+
+void Window::close() {
+	glfwSetWindowShouldClose(window, GLFW_TRUE);
 }

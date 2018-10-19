@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Mesh.h"
+#include "Mesh.hpp"
 
+using namespace Engine;
 
 Mesh::Mesh()
 {

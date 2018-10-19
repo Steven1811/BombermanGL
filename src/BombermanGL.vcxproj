@@ -157,24 +157,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bomb.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Explosion.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Gamefield.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Bomb.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Engine.hpp" />
+    <ClInclude Include="Explosion.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Gamefield.hpp" />
+    <ClInclude Include="Light.hpp" />
+    <ClInclude Include="Logger.hpp" />
+    <ClInclude Include="Material.hpp" />
+    <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="Model.hpp" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Texture.hpp" />
+    <ClInclude Include="Timer.hpp" />
+    <ClInclude Include="Window.hpp" />
+    <ClInclude Include="WindowManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomb.cpp" />

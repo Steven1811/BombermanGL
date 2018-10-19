@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Model.h"
+#include "Model.hpp"
 
 using namespace Engine;
 
@@ -74,7 +74,6 @@ Model::Model()
 		4, 0, 3, 7
 	};
 	*/
-
 	shader = new Shader(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
