@@ -27,118 +27,112 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.hpp">
+    <ClInclude Include="engine\Camera.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.hpp">
+    <ClInclude Include="engine\Engine.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Light.hpp">
+    <ClInclude Include="engine\Label.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.hpp">
+    <ClInclude Include="engine\Light.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Material.hpp">
+    <ClInclude Include="engine\Logger.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.hpp">
+    <ClInclude Include="engine\Material.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Model.hpp">
+    <ClInclude Include="engine\Mesh.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.hpp">
+    <ClInclude Include="engine\Model.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.hpp">
+    <ClInclude Include="engine\Scene.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.hpp">
+    <ClInclude Include="engine\Shader.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.hpp">
+    <ClInclude Include="engine\Texture.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Window.hpp">
+    <ClInclude Include="engine\Timer.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="WindowManager.hpp">
+    <ClInclude Include="engine\Window.hpp">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.hpp">
+    <ClInclude Include="game\Bomb.hpp">
       <Filter>Headerdateien\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Explosion.hpp">
+    <ClInclude Include="game\Explosion.hpp">
       <Filter>Headerdateien\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game.hpp">
+    <ClInclude Include="game\Game.hpp">
       <Filter>Headerdateien\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Gamefield.hpp">
+    <ClInclude Include="game\Gamefield.hpp">
       <Filter>Headerdateien\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Player.hpp">
+    <ClInclude Include="game\Player.hpp">
       <Filter>Headerdateien\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="BombermanGL.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
+    <ClCompile Include="engine\Camera.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="engine\Label.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
+    <ClCompile Include="engine\Light.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="engine\Material.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
+    <ClCompile Include="engine\Mesh.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="engine\Model.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
+    <ClCompile Include="engine\Scene.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="WindowManager.cpp">
+    <ClCompile Include="engine\Shader.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
+    <ClCompile Include="engine\Texture.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Timer.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Window.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Bomb.cpp">
       <Filter>Quelldateien\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Explosion.cpp">
+    <ClCompile Include="game\Explosion.cpp">
       <Filter>Quelldateien\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Gamefield.cpp">
+    <ClCompile Include="game\Game.cpp">
       <Filter>Quelldateien\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="game\Gamefield.cpp">
       <Filter>Quelldateien\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="game\Player.cpp">
       <Filter>Quelldateien\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
