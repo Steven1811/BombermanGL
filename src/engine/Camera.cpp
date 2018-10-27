@@ -5,7 +5,11 @@ using namespace Engine;
 
 Camera::Camera(Window* window)
 {
-	projection = glm::perspective(glm::radians(45.0), (double) window->getWidth() / (double) window->getHeight(), 1.0, 100.0);
+	updateProjectionMatrix(window->getWidth(), window->getHeight(), 45.0, 1.0, 100.0);
+}
+
+void Camera::updateProjectionMatrix(int windowWidth, int windowHeight, float fov, float minDistance, float maxDistance) {
+	projection = glm::perspective(glm::radians(fov), (float) windowWidth / (float) windowHeight, minDistance, maxDistance);
 	update();
 }
 
@@ -30,6 +34,10 @@ void Camera::setDirection(float pitch, float yaw) {
 	update();
 }
 
+glm::vec3 Camera::getPosition() {
+	return position;
+}
+
 void Camera::update() {
 	view = glm::lookAt(position, position + front, up);
 }
@@ -47,4 +55,8 @@ void Camera::moveUp(float units) {
 void Camera::moveRight(float units) {
 	position += glm::normalize(glm::cross(front, up)) * units;
 	update();
+}
+
+glm::vec3 Camera::getFront() {
+	return front;
 }

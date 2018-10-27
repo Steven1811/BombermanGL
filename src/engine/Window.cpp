@@ -58,9 +58,27 @@ Window::Window(unsigned int width, unsigned int height, const char* windowTitle)
 		win->triggerMouseCb(xpos, ypos);
 	});
 
+	glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+		glViewport(0, 0, width, height);
+		Window* usrWindow = (Window*) glfwGetWindowUserPointer(window);
+		Scene* scene = usrWindow->getScene();
+		if (scene) {
+			scene->getCamera()->updateProjectionMatrix(width, height, 45.0, 1.0, 100.0);
+		}
+	});
+
 	setContextActive();
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
+
+	//imgui Initialization
+	#ifdef ENGINE_DEBUG
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui_ImplGlfw_InitForOpenGL(window, false);
+		ImGui_ImplOpenGL3_Init("#version 130");
+		ImGui::StyleColorsDark();
+	#endif
 }
 
 void Window::pollInput() {
@@ -72,6 +90,15 @@ void Window::pollInput() {
 }
 
 void Window::doRender() {
+	//imgui New Frame and Render Calls
+	#ifdef ENGINE_DEBUG
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::ShowDemoWindow();
+		ImGui::Render();
+	#endif
+
 	//If no scene was added to the window, draw the default background color
 	if (!scene) {
 		glClearColor(backColor.r, backColor.g, backColor.b, 1.);
@@ -82,6 +109,11 @@ void Window::doRender() {
 		scene->render();
 	}
 
+	//Render imgui Data to OpenGL Context
+	#ifdef ENGINE_DEBUG
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	#endif
+
 	//Clear Screen and swap Backbuffer with Frontbuffer
 	glfwSwapBuffers(window);
 }
@@ -89,7 +121,6 @@ void Window::doRender() {
 void Window::update() {
 	currentTime = glfwGetTime();
 	frameCount++;
-
 
 	//Check if framerateLimiting is enabled
 	if (framerateLimit != 0) {
@@ -176,4 +207,12 @@ void Window::addKeyCallback(keyCb keyCallback) {
 
 void Window::close() {
 	glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+void Window::showCursor() {
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void Window::hideCursor() {
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }

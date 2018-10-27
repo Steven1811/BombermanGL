@@ -36,6 +36,9 @@ namespace Engine {
 		glm::mat4 getProjectionMatrix();
 		void moveRight(float units);
 		void setDirection(float pitch, float yaw);
+		glm::vec3 getPosition();
+		void updateProjectionMatrix(int windowWidth, int windowHeight, float fov, float minDistance, float maxDistance);
+		glm::vec3 getFront();
 		Camera(Window* window);
 		~Camera();
 	};

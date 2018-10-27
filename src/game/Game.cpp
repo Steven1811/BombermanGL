@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "../engine/Logger.hpp"
+#include <Logger.hpp>
 
 using namespace Engine;
 
@@ -18,12 +18,24 @@ Game::Game()
 	model2->translate(glm::vec3(2.0f, 0.0f, -3.0f));
 	scene->addModel(model);
 	scene->addModel(model2);
+	int texture_units = 0;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &texture_units);
+	logInfo("Tex units: %i", texture_units);
 
 	//Called every by every Windows Message update
 	win->addKeyCallback([&](Window* window, int key, int scancode, int action, int mods) -> void {
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 			logInfo("Closing window.");
 			window->close();
+		}
+		if (key == GLFW_KEY_F2 && action == GLFW_PRESS) {
+			if (camEnabled) {
+				window->showCursor();
+			}
+			else {
+				window->hideCursor();
+			}
+			camEnabled = !camEnabled;
 		}
 		#ifdef ENGINE_DEBUG
 			if (key == GLFW_KEY_F1 && action == GLFW_PRESS) {
@@ -34,49 +46,51 @@ Game::Game()
 
 	//Called every single Frame
 	win->addRenderKeyCallback(GLFW_KEY_W, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveForward(CAM_SPEED * deltaTime);
+		if(camEnabled) scene->getCamera()->moveForward(CAM_SPEED * deltaTime);
 	});
 	win->addRenderKeyCallback(GLFW_KEY_S, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveForward(-CAM_SPEED * deltaTime);
+		if (camEnabled) scene->getCamera()->moveForward(-CAM_SPEED * deltaTime);
 	});
 	win->addRenderKeyCallback(GLFW_KEY_A, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveRight(-CAM_SPEED * deltaTime);
+		if (camEnabled) scene->getCamera()->moveRight(-CAM_SPEED * deltaTime);
 	});
 	win->addRenderKeyCallback(GLFW_KEY_D, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveRight(CAM_SPEED * deltaTime);
+		if (camEnabled) scene->getCamera()->moveRight(CAM_SPEED * deltaTime);
 	});
 	win->addRenderKeyCallback(GLFW_KEY_SPACE, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveUp(CAM_SPEED * deltaTime);
+		if (camEnabled) scene->getCamera()->moveUp(CAM_SPEED * deltaTime);
 	});
 	win->addRenderKeyCallback(GLFW_KEY_LEFT_CONTROL, GLFW_PRESS, [&](Scene* scene, float deltaTime) -> void {
-		scene->getCamera()->moveUp(-CAM_SPEED * deltaTime);
+		if (camEnabled) scene->getCamera()->moveUp(-CAM_SPEED * deltaTime);
 	});
 
 	win->addMouseCallback([&](Window* window, double xpos, double ypos) -> void {
-		if (firstMouse)
-		{
+		if (camEnabled) {
+			if (firstMouse)
+			{
+				lastX = xpos;
+				lastY = ypos;
+				firstMouse = false;
+			}
+
+			float xoffset = xpos - lastX;
+			float yoffset = lastY - ypos;
 			lastX = xpos;
 			lastY = ypos;
-			firstMouse = false;
+
+			float sensitivity = MOUSE_SENSITIVITY;
+			xoffset *= sensitivity;
+			yoffset *= sensitivity;
+
+			yaw += xoffset;
+			pitch += yoffset;
+
+			if (pitch > 89.99f)
+				pitch = 89.99f;
+			if (pitch < -89.99f)
+				pitch = -89.99f;
+			window->getScene()->getCamera()->setDirection(pitch, yaw);
 		}
-
-		float xoffset = xpos - lastX;
-		float yoffset = lastY - ypos;
-		lastX = xpos;
-		lastY = ypos;
-
-		float sensitivity = MOUSE_SENSITIVITY;
-		xoffset *= sensitivity;
-		yoffset *= sensitivity;
-
-		yaw += xoffset;
-		pitch += yoffset;
-
-		if (pitch > 89.99f)
-			pitch = 89.99f;
-		if (pitch < -89.99f)
-			pitch = -89.99f;
-		window->getScene()->getCamera()->setDirection(pitch, yaw);
 	});
 
 

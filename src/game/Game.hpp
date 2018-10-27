@@ -13,9 +13,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../engine/Shader.hpp"
-#include "../engine/Window.hpp"
-#include "../engine/Scene.hpp"
+#include <Shader.hpp>
+#include <Window.hpp>
+#include <Scene.hpp>
 
 #define APPNAME "BombermanGL"
 #define WINDOW_WIDTH 800
@@ -25,6 +25,7 @@
 class Game
 {
 private:
+	bool camEnabled = true;
 	bool firstMouse = true;
 	float lastX = 400, lastY = 300;
 	float pitch, yaw = 0;

@@ -55,7 +55,7 @@ void Scene::render() {
 	glClearColor(backColor.r, backColor.g, backColor.b, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (Model* model : models) {
-		model->draw(cam->getViewMatrix(), cam->getProjectionMatrix());
+		model->draw(cam);
 	}
 	
 }

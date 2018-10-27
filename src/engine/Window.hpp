@@ -12,6 +12,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
+
 #include "Camera.hpp"
 #include "Scene.hpp"
 
@@ -70,6 +75,8 @@ namespace Engine {
 		void close();
 		void pollInput();
 		void addKeyCallback(keyCb keyCallback);
+		void hideCursor();
+		void showCursor();
 		void addRenderKeyCallback(int key, int action, sceneCb keyCallback) {
 			sceneKeyCallbacks.push_back(sceneCallback(keyCallback, key, action));
 		}

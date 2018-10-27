@@ -2,3 +2,7 @@
 **Debug/
 **Release/
 *.blend[0-9]*
+doc/*
+!doc/.gitkeep
+Engine.lib
+Engine_Debug.lib

@@ -9,13 +9,18 @@
 #include <GLFW/glfw3.h>
 #include <SOIL.h>
 
+#include "Logger.hpp"
+
 namespace Engine {
 	class Texture
 	{
 	private:
-		GLuint tex;
+		int width, height = 0;
+		GLuint textureId;
 	public:
-		Texture();
+		Texture(const char* path);
+		GLuint getTextureId();
+		void draw();
 		~Texture();
 	};
 }
